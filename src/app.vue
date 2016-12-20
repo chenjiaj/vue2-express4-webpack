@@ -20,6 +20,11 @@
 		text-decoration: none;
 	}
 	
+	body{
+		font-family: 'Microsoft YaHei';
+		font-size: 0.75rem;
+	}
+	
 	html{
 		font-size: 20px;
 	}
@@ -102,5 +107,48 @@
 		html{
 			font-size: 100px;
 		}
+	}
+	
+	.queue-toast{
+		display: none;
+		position: absolute;
+		z-index: 99;
+		color: #fff;
+		top: 70%;
+		font-size: 1em;
+		text-align: center;
+		width: 100%;
+		left: 0;
+		-moz-transition-duration: 400ms;
+		-o-transition-duration: 400ms;
+		-webkit-transition-duration: 400ms;
+		transition-duration: 400ms;
+		
+	}
+	.queue-toast.toast-in {
+		opacity: 0.9;
+		-moz-transform: translate3d(0, 0, 0);
+		-ms-transform: translate3d(0, 0, 0);
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+	.queue-toast.toast-out {
+		opacity: 0;
+		-moz-transform: translate3d(0, 0, 0) scale(0.815);
+		-ms-transform: translate3d(0, 0, 0) scale(0.815);
+		-webkit-transform: translate3d(0, 0, 0) scale(0.815);
+		transform: translate3d(0, 0, 0) scale(0.815);
+	}
+	
+	.queue-toast>a{
+		padding: 10px 15px;
+		background: #222;
+		opacity :.7;
+		display: inline-block;
+		max-width: 90%;
+		margin: 0 auto;
+		color:#fff;
+		text-align: center;
+		border-radius: 20px;
 	}
 </style>
