@@ -26,8 +26,11 @@
 		</div>
 		
 		<div class="model" v-if="isShowModel">
-			<p>安装插件</p>
-			<p v-on:click="cacelInstallPlugin">终止安装</p>
+			<p class="title">安装插件</p>
+			<div class="progress">
+				<CssCircle width="150" font-size=48 v-bind:pv="pv" bold=8 class="cssCircle"></CssCircle>
+			</div>
+			<p class="stop-btn"><span v-on:click="cacelInstallPlugin">终止安装</span></p>
 		</div>
 		<div class="dark" v-if="isShowModel"></div>
 	</div>
@@ -37,15 +40,20 @@
 	import es6Promise from 'es6-promise';
 	import fetch from 'isomorphic-fetch';
 	import api from '../../tool/fetch-api'
+	import CssCircle  from '../../components/CssCircle.vue'
 		
 	export default {
 		data(){
 			return {
 				resultNum:false,
 				searchData:"",
-				isShowModel:false,
+				isShowModel:true,
+				pv:55,
 				resultList:[]
 			};
+		},
+		components:{
+			CssCircle:CssCircle
 		},
 		created(){
 			es6Promise.polyfill();
@@ -91,9 +99,16 @@
 					$this.resultList = list;
 					$this.resultNum = list.length;
 				});
+				
+				console.log("this.pv",this.pv);
 			},
 			insallPlugin(){
 				this.isShowModel = true;
+				this.pv ++;
+				setTimeout(()=>{
+					this.insallPlugin();
+				},500)
+				
 			},
 			cacelInstallPlugin(){
 				this.isShowModel = false;
@@ -225,6 +240,19 @@
 		border-radius: 0.3rem;
 		padding: 5%;
 		text-align: center;
+	
+		.progress{
+			margin: 1rem 0 2rem 0;
+			text-align: center;
+		}
+		
+		.stop-btn{
+			color:#ff6565;
+		}
+	    
+	    .cssCircle{
+		    margin: 0 auto;
+	    }
 	}
 	
 	.dark{
