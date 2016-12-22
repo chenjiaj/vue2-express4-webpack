@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<button type="button" class="btn" v-on:click="insallPlugin">安装</button>
-		<!--<button type="button" class="btn" v-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
-		<button type="button" class="btn" v-else disabled>安装</button>-->
+		<button type="button" class="btn" v-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
+		<button type="button" class="btn" v-else disabled>安装</button>
+		<!--<button type="button" class="btn" v-on:click="insallPlugin">安装</button>-->
 		<div class="model" v-if="isShowModel">
 			<p class="title">安装插件</p>
 			<div class="progress">
@@ -11,16 +11,20 @@
 			<p class="stop-btn"><span v-on:click.stop.prevent="cacelInstallPlugin">终止安装</span></p>
 		</div>
 		<div class="dark" v-if="isShowModel"></div>
+		
+		<Loading :isLoading="isLoading"></Loading>
 	</div>
 </template>
 
 <script>
 	import api from '../../../tool/fetch-api';
 	import cssCircle  from '../../../components/CssCircle';
-	
+	import Loading from '../../../components/Loading';
+		
 	export default{
 		components: {
-			CssCircle: cssCircle
+			CssCircle: cssCircle,
+			Loading: Loading
 		},
 		props: [
 			'item',
@@ -29,7 +33,8 @@
 		data(){
 			return {
 				isShowModel: false,
-				pv: 0
+				pv: 0,
+				isLoading:false
 			}
 		},
 		methods: {
@@ -54,17 +59,22 @@
 							RPCMethod: 'Install',
 							SequenceId: '00000099',
 							CmdType: 'PLUGIN_ACTION_INSTALL',
-							"GatewayMac": query.mac,
-							'Plugin_Name': item.Plugin_Name,
-							"OS": item.OS,
-							"Plugin_size": item.Plugin_size,
-							"Download_url": item.Download_url,
-							"Version": item.Version
+							GatewayMac: query.mac,
+							Plugin_Name: item.Plugin_Name,
+							OS: item.OS,
+							Plugin_size: item.Plugin_size,
+							Download_url: item.Download_url,
+							Version: item.Version
 						}
 					}
 				};
 				
+				this.isLoading = true;
+				
 				api(this, data, res => {
+					
+					this.isLoading = false;
+					
 					let da = res.responseJson;
 					
 					if (!da) {
@@ -146,13 +156,18 @@
 							RPCMethod: 'Install_query',
 							CmdType: 'PLUGIN_ACTION_INSTALL_QUERY',
 							SequenceId: '00000089',
-							"GatewayMac": query.mac,
-							"Plugin_Name": item.Plugin_Name
+							GatewayMac: query.mac,
+							Plugin_Name: item.Plugin_Name
 						}
 					}
 				};
 				
+				this.isLoading = true;
+				
 				api(this, data, res => {
+					
+					this.isLoading = false;
+					
 					let da = res.responseJson;
 					if (!da) {
 						this.$toast.show("服务器内部错误,请稍后再试", speed);
@@ -224,10 +239,47 @@
 					}
 				});
 			},
+			/**
+			 * 重置进度条
+			 * */
 			resetProgress(){
 				this.pv = 0;//重置
 			},
+			/**
+			 * 发送取消安装请求
+			 * */
 			cacelInstallPlugin(){
+				
+				const speed = 2000;
+				let item = this.item;
+				let query = this.$route.query;
+				let data = {
+					serviceName: 'pluginHandleService',
+					methodName: 'pluginActionInstallCancel',
+					uid: query.uid,
+					utype: query.utype,
+					parameters: {
+						requestJson: {
+							OpenId: query.openId,
+							PVersion: query.PVersion,
+							OsType: query.osType,
+							ID: 79,
+							RPCMethod: 'Install_cancel',
+							CmdType: 'PLUGIN_ACTION_INSTALL_CANCEL',
+							SequenceId: '00000089',
+							GatewayMac: query.mac,
+							Plugin_Name: item.Plugin_Name
+						}
+					}
+				};
+				
+				this.isLoading = true;
+				
+				api(this, data, res => {
+					this.isLoading = false;
+					console.log('res',res);
+				});
+				
 				this.isShowModel = false;
 				clearTimeout(this.timer);
 			}

@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import Plugin from "../views/Plugins/plugin";
 import Detail from "../views/Plugins/detail";
+import Test from "../views/Plugins/test";
 import NotFoundComponent from "../components/NotFound"
 
 const routes = [{
@@ -16,6 +17,10 @@ const routes = [{
 		{
 			path: 'detail',
 			component: Detail
+		},
+		{
+			path: 'test',
+			component: Test
 		}
 	]
 },{

@@ -26,23 +26,28 @@
 			</div>
 			<div v-if="resultList.length == 0" class="no-data">暂无数据</div>
 		</div>
+		
+		<Loading :isLoading="isLoading"></Loading>
 	</div>
 </template>
 
 <script>
 	import api from '../../tool/fetch-api';
 	import installBtn from './components/installBtn';
+	import Loading from '../../components/Loading';
 	
 	export default {
 		data(){
 			return {
 				resultNum: false,
 				searchData: "",
-				resultList: []
+				resultList: [],
+				isLoading:true
 			};
 		},
 		components: {
-			installBtn: installBtn
+			installBtn: installBtn,
+			Loading: Loading
 		},
 		created(){
 			this.fetchData();
@@ -90,7 +95,10 @@
 					}
 				};
 				
+				this.isLoading = true;
+				
 				api(this, findObj, res => {
+					this.isLoading = false;
 					var list = res.responseJson.ResultData.Plugin;
 					this.resultList = list;
 					this.resultNum = list.length;
@@ -106,6 +114,7 @@
 	/**变量**/
 	
 	@height :1.325rem;
+	
 	
 	/**mixin**/
 	
@@ -216,5 +225,5 @@
 		}
 		
 	}
-
+	
 </style>

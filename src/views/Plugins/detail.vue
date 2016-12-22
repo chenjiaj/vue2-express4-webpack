@@ -83,6 +83,8 @@
 					}
 				};
 				
+				this.isloading = true;
+				
 				api(this,findObj,res => {
 					var item = res.responseJson.ResultData;
 					this.item = item;
