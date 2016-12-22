@@ -133,7 +133,7 @@
 			display: inline-block;
 			width: 0.78rem;
 			height: 0.75rem;
-			.iconsBg(- 0.15 rem, - 0.2 rem);
+			.iconsBg(-0.15rem, -0.2rem);
 		}
 	
 		.search-input {
@@ -153,7 +153,7 @@
 		.clear-search {
 			width: 0.6rem;
 			height: 0.6rem;
-			.iconsBg(- 0.2 rem, - 1.19 rem);
+			.iconsBg(-0.2rem, -1.19rem);
 		}
 		
 	}
