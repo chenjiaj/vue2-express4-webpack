@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper">
+	<div class="wrapper" v-if="item">
 		<div class="plugins-item">
 			<img v-if="item.IconName" v-bind:src="item.IconName" class="img"/>
 			<img v-else src="../../assets/icons.png" class="img"/>
@@ -25,7 +25,12 @@
 				</dt>
 			</dl>
 		</div>
-		
+	</div>
+	<div class="loading" v-else-if="isloading">
+		请稍后,数据请求中...
+	</div>
+	<div class="no-data" v-else>
+		抱歉，未查询到相关信息
 	</div>
 </template>
 
@@ -38,7 +43,8 @@
 			return {
 				resultNum:false,
 				searchData:"",
-				item:{}
+				item:null,
+				isloading:true
 			};
 		},
 		components:{
@@ -80,6 +86,7 @@
 				api(this,findObj,res => {
 					var item = res.responseJson.ResultData;
 					this.item = item;
+					this.isloading = false;
 				});
 			}
 		}
@@ -142,6 +149,11 @@
 	.info{
 		margin-top:1em;
 		line-height: 1.5em;
+	}
+	
+	.loading,.no-data{
+		text-align: center;
+		padding-top: 2em;
 	}
 	
 </style>

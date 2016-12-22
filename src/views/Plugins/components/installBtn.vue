@@ -1,7 +1,8 @@
 <template>
 	<div>
-		<button type="button" class="btn" v-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
-		<button type="button" class="btn" v-else disabled>安装</button>
+		<button type="button" class="btn" v-on:click="insallPlugin">安装</button>
+		<!--<button type="button" class="btn" v-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
+		<button type="button" class="btn" v-else disabled>安装</button>-->
 		<div class="model" v-if="isShowModel">
 			<p class="title">安装插件</p>
 			<div class="progress">
@@ -165,7 +166,7 @@
 						if (percent < 100) {
 							this.timer = setTimeout(() => {
 								this.getProgress();
-							}, 1000)
+							}, 5000)
 						}
 					} else {
 						
