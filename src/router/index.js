@@ -1,15 +1,24 @@
 import VueRouter from "vue-router";
-import AddPlugin from "../views/Plugins/addPlugin";
+import Plugin from "../views/Plugins/plugin";
 import Detail from "../views/Plugins/detail";
 import NotFoundComponent from "../components/NotFound"
 
 const routes = [{
-	path: '/addPlugin',
-	component: AddPlugin
-}, {
-	path: '/detail',
-	component: Detail
-}, {
+	path: '/plugin',
+	component:{
+		template:'<router-view></router-view>'
+	},
+	children:[
+		{
+			path: '',
+			component: Plugin
+		},
+		{
+			path: 'detail',
+			component: Detail
+		}
+	]
+},{
 	path: '*',
 	component: NotFoundComponent
 }];

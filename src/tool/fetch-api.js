@@ -1,8 +1,13 @@
 /**
  * Created by chenjiajun on 2016/12/20.
  */
+import es6Promise from 'es6-promise';
+import fetch from 'isomorphic-fetch';
+
+es6Promise.polyfill();
 
 module.exports = function (the, data, succFun) {
+	
 	var options = {
 		method: 'POST',
 		headers: {'Connection': 'close', 'Content-Type': 'application/json; charset=utf-8', 'node': 'open'},
@@ -25,5 +30,7 @@ module.exports = function (the, data, succFun) {
 		
 		succFun && succFun(data);
 		
-	}).catch(e => console.log("Oops, error", e));
+	}).catch(e => {
+		console.log("Oops, error", e)
+	});
 }
