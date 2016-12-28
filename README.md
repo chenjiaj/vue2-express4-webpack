@@ -12,3 +12,9 @@
 1.运行npm run build 打包生成output文件夹
 
 2.运行npm run prod 可以启动生成环境代码，也可以通过npm install -g pm2 全局安装pm2，然后运行npm run pm2_start来启动项目
+
+## 三、Vue2 + webpack + express4构建单页应用文档
+
+[Vue2 + webpack + express4构建单页应用(二)](http://www.jianshu.com/p/2e65ac138df6)
+
+[Vue2 + webpack + express4构建单页应用(二)](http://www.jianshu.com/p/1696e256d774)
