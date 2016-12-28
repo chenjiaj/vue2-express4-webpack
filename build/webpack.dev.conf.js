@@ -16,12 +16,7 @@ var webpackDevConf = merge(webPackBaseConf,{
 		// Webpack 2.0 fixed this mispelling
 		// new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
-		new HtmlWebpackPlugin({
-			filename: 'index.html',
-			template: path.resolve(__dirname, '../index.html'),
-			inject: true
-		})
+		new webpack.NoErrorsPlugin()
 	]
 });
 

@@ -36,8 +36,8 @@ module.exports = {
 				exclude: /node_modules/
 			},
 			{
-				test: /\.png$/,
-				loader: 'file',
+				test: /\.png$|\.jpg$|\.gif$|\.ico$/,
+				loader: "file?name=/static/img/[name].[hash].[ext]",
 				exclude: /node_modules/
 			}
 		]
@@ -47,5 +47,12 @@ module.exports = {
 			js: 'babel'
 		},
 		postcss: [require('autoprefixer')()]
-	}
+	},
+	plugins:[
+		new HtmlWebpackPlugin({
+			filename: 'index.html',
+			template: path.resolve(__dirname, '../index.html'),
+			inject: true
+		})
+	]
 }

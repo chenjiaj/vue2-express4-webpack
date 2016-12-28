@@ -8,7 +8,7 @@ var config = require('./config/config');
 var app = express();
 
 var options = {
-	target: 'http://172.19.10.9:8090/app', // target host
+	target: config.service.httpOpenApi.url, // target host
 	pathRewrite: function (path) {
 		return path.replace(/^\/api\/(\w)*/, '/')
 	},
