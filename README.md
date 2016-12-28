@@ -1,5 +1,5 @@
 
-** 一、启动开发环境
+## 一、启动开发环境
 
 1.下载代码 或 git@github.com:chenjiaj/vue2-express4-webpack.git
 
@@ -7,7 +7,7 @@
 
 3.在路径下运行 npm start 启动服务
 
-** 二、生成环境打包和运行
+## 二、生成环境打包和运行
 
 1.运行npm run build 打包生成output文件夹
 
