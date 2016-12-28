@@ -39,11 +39,6 @@ module.exports = {
 				test: /\.png$/,
 				loader: 'file',
 				exclude: /node_modules/
-			},
-			{
-				test: /\.css/,
-				loader: 'css!style',
-				exclude: /node_modules/
 			}
 		]
 	},

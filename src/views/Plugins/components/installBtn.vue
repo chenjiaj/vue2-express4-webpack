@@ -1,8 +1,10 @@
 <template>
 	<div>
-		<button type="button" class="btn" v-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
+		<button type="button" class="btn" v-if="isInstall" v-on:click="insallPlugin">安装中</button>
+		<button type="button" class="btn" v-else-if="pv == 100" disabled>已安装</button>
+		<button type="button" class="btn" v-else-if="item.Installed == 0" v-on:click="insallPlugin">安装</button>
 		<button type="button" class="btn" v-else disabled>安装</button>
-		<!--<button type="button" class="btn" v-on:click="insallPlugin">安装</button>-->
+		
 		<div class="model" v-if="isShowModel">
 			<p class="title">安装插件</p>
 			<div class="progress">
@@ -10,7 +12,7 @@
 			</div>
 			<p class="stop-btn"><span v-on:click.stop.prevent="cacelInstallPlugin">终止安装</span></p>
 		</div>
-		<div class="dark" v-if="isShowModel"></div>
+		<div class="dark" v-if="isShowModel" v-on:click="closeModel"></div>
 		
 		<Loading :isLoading="isLoading"></Loading>
 	</div>
@@ -34,6 +36,7 @@
 			return {
 				isShowModel: false,
 				pv: 0,
+				isInstall:null,
 				isLoading:false
 			}
 		},
@@ -44,6 +47,14 @@
 			insallPlugin(){
 				const speed = 2000;
 				let item = this.item;
+				
+				if(this.isInstall){//如果在安装中,直接请求进度
+					this.resetProgress();//重置进度控件
+					this.isShowModel = true;//打开弹出框
+					this.getProgress();//请求进度状态
+					return;
+				}
+				
 				let query = this.$route.query;
 				let data = {
 					serviceName: 'pluginHandleService',
@@ -71,7 +82,7 @@
 				
 				this.isLoading = true;
 				
-				api(this, data, res => {
+				api(this,'pluginActionInstall', data, res => {
 					
 					this.isLoading = false;
 					
@@ -86,7 +97,9 @@
 						this.resetProgress();//重置进度控件
 						this.isShowModel = true;//打开弹出框
 						this.getProgress(true);//请求进度状态
+						this.isInstall = true;//标记安装中
 					} else {
+						console.log(da.Result)
 						switch (da.Result) {
 							case -101:
 								this.$toast.show("安装任务不存在", speed);
@@ -101,6 +114,7 @@
 								this.$toast.show("空间不足", speed);
 								break;
 							case -105:
+								console.log('已存在一个安装任务')
 								this.$toast.show("已存在一个安装任务", speed);
 								break;
 							case -106:
@@ -164,7 +178,7 @@
 				
 				this.isLoading = true;
 				
-				api(this, data, res => {
+				api(this,'pluginActionInstallQuery', data, res => {
 					
 					this.isLoading = false;
 					
@@ -182,6 +196,10 @@
 							this.timer = setTimeout(() => {
 								this.getProgress();
 							}, 5000)
+						}else if(percent == 100){
+							this.$toast.show("下载成功", speed);
+							this.isShowModel = false;
+							this.isInstall = false;//标记不在安装中
 						}
 					} else {
 						
@@ -235,7 +253,6 @@
 							default:
 								this.$toast.show("服务器内部错误,请重新安装", speed);
 						}
-						;
 					}
 				});
 			},
@@ -275,13 +292,36 @@
 				
 				this.isLoading = true;
 				
-				api(this, data, res => {
+				api(this,'pluginActionInstallCancel', data, res => {
 					this.isLoading = false;
-					console.log('res',res);
+					this.isShowModel = false;
+					clearTimeout(this.timer);
+					
+					if(res.Result == 0){
+						this.$toast.show("已成功取消安装", speed);
+						this.isInstall = false;//标记不在安装中
+						return;
+					}
+				
+					switch (res.Result){
+						case -101:
+							this.$toast.show("安装任务不存在", speed);
+							break;
+						case -111:
+							this.$toast.show("插件已完成安装", speed);
+							break;
+						default:
+							this.$toast.show("请求失败，请稍后再试", speed);
+					}
+					
 				});
 				
+			},
+			/**
+			 * 关闭弹窗
+			 * */
+			closeModel(){
 				this.isShowModel = false;
-				clearTimeout(this.timer);
 			}
 		}
 	}

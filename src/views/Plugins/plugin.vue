@@ -97,11 +97,26 @@
 				
 				this.isLoading = true;
 				
-				api(this, findObj, res => {
+				api(this,'appGatewayPluginListGet', findObj, res => {
 					this.isLoading = false;
-					var list = res.responseJson.ResultData.Plugin;
-					this.resultList = list;
-					this.resultNum = list.length;
+					let list = res.responseJson.ResultData.Plugin;
+					let resList = new Array();
+					
+					/**
+					 * 搜索现在暂时做在前端，过滤搜索条件
+					 */
+					if(this.searchData){
+						list.forEach((item,index)=>{
+							if(item.Plugin_Cname.indexOf(this.searchData) != -1){
+								resList.push(item);
+							}
+						});
+					}else{
+						resList = list;
+					}
+					
+					this.resultList = resList;
+					this.resultNum = resList.length;
 				});
 				
 			}

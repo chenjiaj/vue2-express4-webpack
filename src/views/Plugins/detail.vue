@@ -85,7 +85,7 @@
 				
 				this.isloading = true;
 				
-				api(this,findObj,res => {
+				api(this,'appGatewayPluginDetailGet',findObj,res => {
 					var item = res.responseJson.ResultData;
 					this.item = item;
 					this.isloading = false;

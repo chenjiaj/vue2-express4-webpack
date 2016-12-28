@@ -3,12 +3,10 @@ var webpack = require('webpack');
 var webPackBaseConf = require('./webpack.base.conf');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var merge = require('webpack-merge');
-var hotClient = './build/hot-client';
 
 var webpackDevConf = merge(webPackBaseConf,{
 	entry: {
 		index: [
-			hotClient,
 			path.resolve(__dirname, '../src/main.js')
 		]
 	},
@@ -29,7 +27,7 @@ var webpackDevConf = merge(webPackBaseConf,{
 
 
 Object.keys(webpackDevConf.entry).forEach(function (name) {
-	var extras = [hotClient];
+	var extras = ['webpack-hot-middleware/client?reload=1'];
 	webpackDevConf.entry[name] = extras.concat(webpackDevConf.entry[name]);
 });
 
