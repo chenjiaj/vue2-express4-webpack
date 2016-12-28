@@ -1,7 +1,7 @@
 
 ## 一、启动开发环境
 
-1.下载代码 或 git@github.com:chenjiaj/vue2-express4-webpack.git
+1.下载代码 或 git clone git@github.com:chenjiaj/vue2-express4-webpack.git
 
 2.在根路径下运行npm install 下载用到的依赖的插件
 
