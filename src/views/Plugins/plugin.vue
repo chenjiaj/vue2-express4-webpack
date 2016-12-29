@@ -2,17 +2,17 @@
 	<div>
 		<form class="search-area">
 			<div class="input-wrapper">
-				<span class="search-icon" v-on:click="fetchData"></span>
+				<span class="search-icon" @click="fetchData"></span>
 				<input type="text" placeholder="搜索" class="search-input" v-model="searchData"/>
 				<span class="search-result" v-if="resultNum"> {{ resultNum }} 个结果</span>
-				<span class="clear-search" v-on:click="clearSearchInpt"></span>
+				<span class="clear-search" @click="clearSearchInpt"></span>
 			</div>
 		</form>
 		
 		<div class="plugins-wrapper">
 			<div class="plugins-item" v-for="item in resultList">
 				<a :href="getUrl(item)">
-					<img v-if="item.IconName" v-bind:src="item.IconName" class="img"/>
+					<img v-if="item.IconName" :src="item.IconName" class="img"/>
 					<img v-else src="../../assets/icons.png" class="img"/>
 				</a>
 				<a :href="getUrl(item)" class="content">
@@ -106,7 +106,7 @@
 					 * 搜索现在暂时做在前端，过滤搜索条件
 					 */
 					if(this.searchData){
-						list.forEach((item,index)=>{
+						list.forEach(item=>{
 							if(item.Plugin_Cname.indexOf(this.searchData) != -1){
 								resList.push(item);
 							}
@@ -124,7 +124,7 @@
 	}
 </script>
 
-<style lang="less" scoped>
+<style lang="less" rel="stylesheet/less" scoped>
 	
 	/**变量**/
 	
