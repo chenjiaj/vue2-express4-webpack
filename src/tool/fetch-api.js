@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch';
 
 es6Promise.polyfill();
 
-module.exports = function (the, url, data, succFun, errFun) {
+module.exports = function (the, url, data, succFun,failFun, errFun) {
 	
 	var options = {
 		method: 'POST',
@@ -26,8 +26,11 @@ module.exports = function (the, url, data, succFun, errFun) {
 		
 		if (data.resultCode != 0) {
 			the.$toast.show(data.resultMsg, 2000);
+			the.isLoading && (the.isLoading = false);
+			failFun && failFun();
+		}else{
+			succFun && succFun(data);
 		}
-		succFun && succFun(data);
 		
 	}).catch(e => {
 		the.$toast.show('服务器内部错误，请联系管理员', 2000);

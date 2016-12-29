@@ -37,7 +37,7 @@ module.exports = {
 			},
 			{
 				test: /\.png$|\.jpg$|\.gif$|\.ico$/,
-				loader: "file?name=/static/img/[name].[hash].[ext]",
+				loader: "file?name=static/img/[name].[hash].[ext]",
 				exclude: /node_modules/
 			}
 		]

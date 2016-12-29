@@ -19,7 +19,7 @@ var prodWebpackConf = merge(webpackConf,{
 		}
 	},
 	plugins:[
-		new ExtractTextPlugin("/static/css/style.css"),
+		new ExtractTextPlugin("static/css/style.css"),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				warnings: false
