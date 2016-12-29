@@ -15,6 +15,6 @@
 
 ## 三、Vue2 + webpack + express4构建单页应用文档
 
-[Vue2 + webpack + express4构建单页应用(二)](http://www.jianshu.com/p/2e65ac138df6)
+[Vue2 + webpack + express4构建单页应用(一)](http://www.jianshu.com/p/2e65ac138df6)
 
 [Vue2 + webpack + express4构建单页应用(二)](http://www.jianshu.com/p/1696e256d774)
