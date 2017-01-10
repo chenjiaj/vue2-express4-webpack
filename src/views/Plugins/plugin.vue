@@ -11,15 +11,15 @@
 		
 		<div class="plugins-wrapper">
 			<div class="plugins-item" v-for="item in resultList">
-				<a :href="getUrl(item)">
+				<router-link :to="getUrl(item)">
 					<img v-if="item.IconName" :src="item.IconName" class="img"/>
 					<img v-else src="../../assets/icons.png" class="img"/>
-				</a>
-				<a :href="getUrl(item)" class="content">
+				</router-link>
+				<router-link :to="getUrl(item)" class="content">
 					<p class="c-title">{{item.Plugin_Cname}}</p>
 					<p class="c-des">{{item.Description}}</p>
 					<p class="c-info">（{{item.Installed}}人下载）</p>
-				</a>
+				</router-link>
 				<div class="operate">
 					<installBtn :item="item" :query="this"></installBtn>
 				</div>

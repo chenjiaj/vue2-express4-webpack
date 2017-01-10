@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
-import Plugin from "../views/Plugins/plugin";
-import Detail from "../views/Plugins/detail";
-import NotFoundComponent from "../components/NotFound"
+const Plugin = r => require.ensure([], () => r(require('../views/Plugins/plugin')), 'Plugin');
+const Detail = r => require.ensure([], () => r(require('../views/Plugins/detail')), 'Detail');
+const NotFoundComponent = r => require.ensure([], () => r(require('../components/NotFound')), 'NotFoundComponent');
 
 const routes = [{
 	path: '/plugin',
