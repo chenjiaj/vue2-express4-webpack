@@ -13,20 +13,16 @@
 			<p class="stop-btn"><span v-on:click.stop.prevent="cacelInstallPlugin">终止安装</span></p>
 		</div>
 		<div class="dark" v-if="isShowModel" v-on:click="closeModel"></div>
-		
-		<Loading :isLoading="isLoading"></Loading>
 	</div>
 </template>
 
 <script>
 	import api from '../../../tool/fetch-api';
 	import cssCircle  from '../../../components/CssCircle';
-	import Loading from '../../../components/Loading';
 		
 	export default{
 		components: {
-			CssCircle: cssCircle,
-			Loading: Loading
+			CssCircle: cssCircle
 		},
 		props: [
 			'item',
@@ -36,8 +32,7 @@
 			return {
 				isShowModel: false,
 				pv: 0,
-				isInstall:null,
-				isLoading:false
+				isInstall:null
 			}
 		},
 		methods: {
@@ -80,11 +75,7 @@
 					}
 				};
 				
-				this.isLoading = true;
-				
 				api(this,'pluginActionInstall', data, res => {
-					
-					this.isLoading = false;
 					
 					let da = res.responseJson;
 					
@@ -175,14 +166,11 @@
 						}
 					}
 				};
-				
-				this.isLoading = true;
-				
+								
 				api(this,'pluginActionInstallQuery', data, res => {
 					
-					this.isLoading = false;
-					
 					let da = res.responseJson;
+				
 					if (!da) {
 						this.$toast.show("服务器内部错误,请稍后再试", speed);
 						return false;
@@ -254,7 +242,7 @@
 								this.$toast.show("服务器内部错误,请重新安装", speed);
 						}
 					}
-				});
+				},()=>{},()=>{},false);
 			},
 			/**
 			 * 重置进度条
@@ -290,10 +278,8 @@
 					}
 				};
 				
-				this.isLoading = true;
-				
 				api(this,'pluginActionInstallCancel', data, res => {
-					this.isLoading = false;
+					
 					this.isShowModel = false;
 					clearTimeout(this.timer);
 					

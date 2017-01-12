@@ -6,7 +6,9 @@ import fetch from 'isomorphic-fetch';
 
 es6Promise.polyfill();
 
-module.exports = function (the, url, data, succFun,failFun, errFun) {
+module.exports = function (the, url, data, succFun, failFun, errFun, noloading) {
+	
+	var isLoading = noloading === false ? false : true;
 	
 	var options = {
 		method: 'POST',
@@ -14,7 +16,10 @@ module.exports = function (the, url, data, succFun,failFun, errFun) {
 		body: JSON.stringify(data)
 	};
 	
+	isLoading && the.$store.commit('show');
+	
 	fetch('/api/' + url, options).then(response => {
+		isLoading && the.$store.commit('hide');
 		if (response.status >= 200 && response.status < 300) {
 			return response.json();
 		} else {
@@ -26,15 +31,13 @@ module.exports = function (the, url, data, succFun,failFun, errFun) {
 		
 		if (data.resultCode != 0) {
 			the.$toast.show(data.resultMsg, 2000);
-			the.isLoading && (the.isLoading = false);
 			failFun && failFun();
-		}else{
+		} else {
 			succFun && succFun(data);
 		}
 		
 	}).catch(e => {
 		the.$toast.show('服务器内部错误，请联系管理员', 2000);
 		errFun && errFun();
-		the.isLoading && (the.isLoading = false);
 	});
 }

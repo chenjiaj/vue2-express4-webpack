@@ -1,8 +1,19 @@
 <template>
 	<div>
 		<router-view></router-view>
+		<Loading></Loading>
 	</div>
 </template>
+
+<script>
+	import Loading from './components/Loading';
+	
+	export default {
+		components: {
+			Loading: Loading
+		}
+	}
+</script>
 
 <style>
 	*{

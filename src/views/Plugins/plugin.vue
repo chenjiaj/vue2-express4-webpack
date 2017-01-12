@@ -26,15 +26,12 @@
 			</div>
 			<div v-if="resultList.length == 0" class="no-data">暂无数据</div>
 		</div>
-		
-		<Loading :isLoading="isLoading"></Loading>
 	</div>
 </template>
 
 <script>
 	import api from '../../tool/fetch-api';
 	import installBtn from './components/installBtn';
-	import Loading from '../../components/Loading';
 	
 	export default {
 		data(){
@@ -42,15 +39,14 @@
 				resultNum: false,
 				searchData: "",
 				resultList: [],
-				isLoading:true
 			};
 		},
 		components: {
-			installBtn: installBtn,
-			Loading: Loading
+			installBtn: installBtn
 		},
 		created(){
 			this.fetchData();
+			console.log('this.$store.state.count:',this.$store.state.isShow);
 		},
 		watch: {
 			'$route': 'fetchData'// 如果路由有变化，会再次执行该方法
@@ -94,14 +90,10 @@
 						}
 					}
 				};
-				
-				this.isLoading = true;
-				
+								
 				api(this,'appGatewayPluginListGet', findObj, res => {
-					this.isLoading = false;
 					let list = res.responseJson.ResultData.Plugin;
 					let resList = new Array();
-					
 					/**
 					 * 搜索现在暂时做在前端，过滤搜索条件
 					 */
@@ -129,7 +121,6 @@
 	/**变量**/
 	
 	@height :1.325rem;
-	
 	
 	/**mixin**/
 	

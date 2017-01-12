@@ -17,7 +17,9 @@ var webpackDevConf = merge(webPackBaseConf,{
 		// new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin()
-	]
+	],
+	debug: true,
+	devtool: '#cheap-module-inline-source-map'
 });
 
 

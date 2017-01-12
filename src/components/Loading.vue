@@ -1,14 +1,16 @@
 <template>
-	<div :class="{loading:true,isShow:isLoading}">
+	<div :class="{loading:true,isShow:isShow}">
 		<div><i></i></div>
 	</div>
 </template>
 
 <script>
 	export default{
-		props:[
-			'isLoading'
-		]
+		computed:{
+			isShow(){
+				return this.$store.state.isShow;
+			}
+		}
 	}
 </script>
 
